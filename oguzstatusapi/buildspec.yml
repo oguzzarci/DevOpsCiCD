@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region eu-west-1)
+  build:
+    commands:
+      - echo Build started on date
+      - echo Building the Docker image...
+      - export TAG=$CODEBUILD_BUILD_NUMBER
+      - echo $TAG
+      - docker build -t oguzstatusapi .
+      - docker tag 	oguzstatusapi:latest test.dkr.ecr.eu-west-1.amazonaws.com/oguzstatusapi:$TAG
+      - docker images
+  post_build:
+    commands:
+      - echo Build started ...
+      - echo Pushing the Docker image....
+      - docker push test.dkr.ecr.eu-west-1.amazonaws.com/oguzstatusapi:$TAG
+      - aws eks update-kubeconfig --name oguz-poc --region eu-west-1
+      - echo $CODEBUILD_BUILD_NUMBER
+      - envsubst < statusapiDeployment.yaml | kubectl apply -f -

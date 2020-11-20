@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: case-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+  - host: user.service.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: userapi-svc
+          servicePort: 80
+  - host: status.service.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: statusapi-svc
+          servicePort: 80

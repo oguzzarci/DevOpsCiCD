@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statusapi
+  labels:
+    app: statusapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: statusapi
+  template:
+    metadata:
+      labels:
+        app: statusapi
+    spec:
+      containers:
+        - name: statusapi
+          image: test.dkr.ecr.eu-west-1.amazonaws.com/oguzstatusapi:$CODEBUILD_BUILD_NUMBER
+          env:
+            - name: NODE_ENV_DB_URL
+              value: "http://mongo-ip"
+          ports:
+            - containerPort: 3000
