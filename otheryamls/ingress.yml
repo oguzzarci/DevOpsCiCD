@@ -14,12 +14,12 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: userapi-svc
+          serviceName: userapi-svc-lb
           servicePort: 80
   - host: status.service.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: statusapi-svc
+          serviceName: statusapi-svc-lb
           servicePort: 80
