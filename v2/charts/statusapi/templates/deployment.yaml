@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statusapi
+  labels:
+    app: statusapi
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: statusapi
+  template:
+    metadata:
+      labels:
+        app: statusapi
+    spec:
+      containers:
+        - name: statusapi
+          image: {{ .Values.imagetag }}
+          env:
+            - name: NODE_ENV_DB_URL
+              value: {{ .Values.mongodburl }}
+          ports:
+            - containerPort: 3000

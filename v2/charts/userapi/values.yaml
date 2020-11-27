@@ -1,0 +1,3 @@
+imagetag: latest
+replicacount: 1
+mongodburl: 172.0.0.1
