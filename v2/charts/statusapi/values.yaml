@@ -1,3 +1,3 @@
-imagetag: latest
+imagetag: oguzzarci/statusapiv2:tagname
 replicaCount: 1
 mongodburl: 172.0.0.1
